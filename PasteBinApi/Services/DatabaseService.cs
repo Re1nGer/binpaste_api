@@ -64,7 +64,8 @@ public class DatabaseService : IDatabaseService
                     burn_after_read BOOLEAN DEFAULT FALSE,
                     is_burned BOOLEAN DEFAULT FALSE,
                     tags TEXT[],
-                    metadata JSONB DEFAULT '{}'
+                    metadata JSONB DEFAULT '{}',
+                    expires_in_minutes TEXT
                 );
 
                 CREATE TABLE IF NOT EXISTS paste_views (

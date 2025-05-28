@@ -17,7 +17,7 @@ public class CreatePasteRequest
         public bool IsPrivate { get; set; } = false;
         public bool BurnAfterRead { get; set; } = false;
         public string? Password { get; set; }
-        public DateTime? ExpiresAt { get; set; }
+        public long? ExpiresAfterInMinutes { get; set; }
         public string[] Tags { get; set; } = Array.Empty<string>();
     }
 
@@ -37,6 +37,7 @@ public class CreatePasteRequest
         public bool BurnAfterRead { get; set; }
         public string[] Tags { get; set; } = Array.Empty<string>();
         public string Url { get; set; } = string.Empty;
+        public string? ExpiresInMinutes { get; set; }
     }
 
     public class PasteListResponse

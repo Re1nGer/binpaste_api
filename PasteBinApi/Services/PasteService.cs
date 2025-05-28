@@ -33,12 +33,14 @@ namespace PasteBinApi.Services;
                     Language = request.Language,
                     IsPrivate = request.IsPrivate,
                     BurnAfterRead = request.BurnAfterRead,
-                    ExpiresAt = request.ExpiresAt,
+                    ExpiresAt = request.ExpiresAfterInMinutes.HasValue
+                        ? DateTime.UtcNow.AddMinutes(request.ExpiresAfterInMinutes.Value) : null,
                     CreatedAt = DateTime.UtcNow,
                     UpdatedAt = DateTime.UtcNow,
                     SizeBytes = Encoding.UTF8.GetByteCount(request.Content),
                     Tags = request.Tags,
-                    ContentHash = _hashGenerator.GenerateContentHash(request.Content)
+                    ContentHash = _hashGenerator.GenerateContentHash(request.Content),
+                    ExpiresInMinutes = request.ExpiresAfterInMinutes.HasValue ? request.ExpiresAfterInMinutes.ToString() : null
                 };
 
                 // Generate unique short ID
@@ -99,7 +101,8 @@ namespace PasteBinApi.Services;
                 SizeBytes = paste.SizeBytes,
                 BurnAfterRead = paste.BurnAfterRead,
                 Tags = paste.Tags,
-                Url = $"/p/{paste.ShortId}"
+                Url = $"/p/{paste.ShortId}",
+                ExpiresInMinutes = paste.ExpiresInMinutes
             };
         }
 
@@ -115,8 +118,6 @@ namespace PasteBinApi.Services;
                 Language = p.Language,
                 CreatedAt = p.CreatedAt,
                 ViewCount = p.ViewCount,
-                SizeBytes = p.SizeBytes,
-                IsPrivate = p.IsPrivate,
                 Content = p.Content
             });
         }

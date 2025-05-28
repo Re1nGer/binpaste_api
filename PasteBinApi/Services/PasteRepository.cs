@@ -22,11 +22,11 @@ public class PasteRepository : IPasteRepository
                 INSERT INTO pastes (
                     id, short_id, title, content, content_hash, language, is_private, 
                     password_hash, expires_at, created_at, updated_at, size_bytes, 
-                    burn_after_read, tags, metadata
+                    burn_after_read, tags, metadata, expires_in_minutes
                 ) VALUES (
                     @Id, @ShortId, @Title, @Content, @ContentHash, @Language, @IsPrivate,
                     @PasswordHash, @ExpiresAt, @CreatedAt, @UpdatedAt, @SizeBytes,
-                    @BurnAfterRead, @Tags, @Metadata::jsonb
+                    @BurnAfterRead, @Tags, @Metadata::jsonb, @ExpiresInMinutes
                 ) RETURNING *";
 
             using var connection = await _databaseService.GetConnectionAsync();
@@ -47,7 +47,8 @@ public class PasteRepository : IPasteRepository
                 paste.SizeBytes,
                 paste.BurnAfterRead,
                 Tags = paste.Tags,
-                Metadata = JsonSerializer.Serialize(paste.Metadata)
+                Metadata = JsonSerializer.Serialize(paste.Metadata),
+                paste.ExpiresInMinutes
             });
 
             return MapToPaste(result);
@@ -178,7 +179,8 @@ public class PasteRepository : IPasteRepository
                 Tags = result.tags ?? Array.Empty<string>(),
                 Metadata = string.IsNullOrEmpty(result.metadata?.ToString()) 
                     ? new Dictionary<string, object>() 
-                    : JsonSerializer.Deserialize<Dictionary<string, object>>(result.metadata.ToString())
+                    : JsonSerializer.Deserialize<Dictionary<string, object>>(result.metadata.ToString()),
+                ExpiresInMinutes = result.expires_in_minutes
             };
         }
 

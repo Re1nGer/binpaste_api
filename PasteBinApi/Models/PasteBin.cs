@@ -12,12 +12,12 @@ public class Paste
     public bool IsPrivate { get; set; } = false;
     public string? PasswordHash { get; set; }
     public DateTime? ExpiresAt { get; set; }
+    public string? ExpiresInMinutes { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
     public long ViewCount { get; set; } = 0;
     public long DownloadCount { get; set; } = 0;
     public int SizeBytes { get; set; }
-    public string? IpAddress { get; set; }
     public bool BurnAfterRead { get; set; } = false;
     public bool IsBurned { get; set; } = false;
     public string[] Tags { get; set; } = [];
