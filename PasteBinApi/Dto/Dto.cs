@@ -44,6 +44,7 @@ public class CreatePasteRequest
         public Guid Id { get; set; }
         public string ShortId { get; set; } = string.Empty;
         public string? Title { get; set; }
+        public string Content { get; set; }
         public string Language { get; set; } = "text";
         public DateTime CreatedAt { get; set; }
         public long ViewCount { get; set; }

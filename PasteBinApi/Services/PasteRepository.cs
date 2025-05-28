@@ -80,7 +80,7 @@ public class PasteRepository : IPasteRepository
         public async Task<IEnumerable<Paste>> GetRecentPublicAsync(int limit = 10)
         {
             const string sql = @"
-                SELECT id, short_id, title, language, created_at, view_count, size_bytes, is_private
+                SELECT id, content, short_id, title, language, created_at, view_count, size_bytes, is_private
                 FROM pastes 
                 WHERE is_private = FALSE 
                 AND (expires_at IS NULL OR expires_at > NOW()) 
@@ -193,7 +193,8 @@ public class PasteRepository : IPasteRepository
                 CreatedAt = result.created_at,
                 ViewCount = result.view_count,
                 SizeBytes = result.size_bytes,
-                IsPrivate = result.is_private
+                IsPrivate = result.is_private,
+                Content = result.content,
             };
         }
     }

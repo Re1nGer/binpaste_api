@@ -116,7 +116,8 @@ namespace PasteBinApi.Services;
                 CreatedAt = p.CreatedAt,
                 ViewCount = p.ViewCount,
                 SizeBytes = p.SizeBytes,
-                IsPrivate = p.IsPrivate
+                IsPrivate = p.IsPrivate,
+                Content = p.Content
             });
         }
 
