@@ -28,7 +28,6 @@ public class AnalyticsService : IAnalyticsService
             {
                 Id = Guid.NewGuid(),
                 PasteId = pasteId,
-                ViewerIp = clientIp,
                 UserAgent = userAgent,
                 Referer = referer,
                 ViewedAt = DateTime.UtcNow,

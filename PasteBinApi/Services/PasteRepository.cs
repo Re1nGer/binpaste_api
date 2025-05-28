@@ -22,11 +22,11 @@ public class PasteRepository : IPasteRepository
                 INSERT INTO pastes (
                     id, short_id, title, content, content_hash, language, is_private, 
                     password_hash, expires_at, created_at, updated_at, size_bytes, 
-                    ip_address, burn_after_read, tags, metadata
+                    burn_after_read, tags, metadata
                 ) VALUES (
                     @Id, @ShortId, @Title, @Content, @ContentHash, @Language, @IsPrivate,
                     @PasswordHash, @ExpiresAt, @CreatedAt, @UpdatedAt, @SizeBytes,
-                    @IpAddress, @BurnAfterRead, @Tags, @Metadata::jsonb
+                    @BurnAfterRead, @Tags, @Metadata::jsonb
                 ) RETURNING *";
 
             using var connection = await _databaseService.GetConnectionAsync();
@@ -45,7 +45,6 @@ public class PasteRepository : IPasteRepository
                 paste.CreatedAt,
                 paste.UpdatedAt,
                 paste.SizeBytes,
-                paste.IpAddress,
                 paste.BurnAfterRead,
                 Tags = paste.Tags,
                 Metadata = JsonSerializer.Serialize(paste.Metadata)
@@ -174,7 +173,6 @@ public class PasteRepository : IPasteRepository
                 ViewCount = result.view_count,
                 DownloadCount = result.download_count,
                 SizeBytes = result.size_bytes,
-                IpAddress = result.ip_address,
                 BurnAfterRead = result.burn_after_read,
                 IsBurned = result.is_burned,
                 Tags = result.tags ?? Array.Empty<string>(),

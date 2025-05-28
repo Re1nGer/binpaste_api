@@ -37,7 +37,6 @@ namespace PasteBinApi.Services;
                     CreatedAt = DateTime.UtcNow,
                     UpdatedAt = DateTime.UtcNow,
                     SizeBytes = Encoding.UTF8.GetByteCount(request.Content),
-                    IpAddress = clientIp,
                     Tags = request.Tags,
                     ContentHash = _hashGenerator.GenerateContentHash(request.Content)
                 };
@@ -62,7 +61,7 @@ namespace PasteBinApi.Services;
                     SizeBytes = createdPaste.SizeBytes,
                     BurnAfterRead = createdPaste.BurnAfterRead,
                     Tags = createdPaste.Tags,
-                    Url = $"/p/{createdPaste.ShortId}"
+                    Url = $"/api/v1/pastes/{createdPaste.ShortId}"
                 };
             }
             catch (Exception ex)

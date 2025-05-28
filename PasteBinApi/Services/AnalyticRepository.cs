@@ -20,8 +20,8 @@ namespace PasteBinApi.Services;
         public async Task RecordViewAsync(PasteView view)
         {
             const string sql = @"
-                INSERT INTO paste_views (id, paste_id, viewer_ip, viewer_country, viewer_city, user_agent, referer, viewed_at, session_id)
-                VALUES (@Id, @PasteId, @ViewerIp, @ViewerCountry, @ViewerCity, @UserAgent, @Referer, @ViewedAt, @SessionId)";
+                INSERT INTO paste_views (id, paste_id, viewer_country, viewer_city, user_agent, referer, viewed_at, session_id)
+                VALUES (@Id, @PasteId, @ViewerCountry, @ViewerCity, @UserAgent, @Referer, @ViewedAt, @SessionId)";
 
             using var connection = await _databaseService.GetConnectionAsync();
             await connection.ExecuteAsync(sql, view);
